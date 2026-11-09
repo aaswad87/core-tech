@@ -502,9 +502,10 @@ Every delivery is logged in `notification_deliveries`. "Sent" means the provider
 pursued. The match page suggests candidates from our database who mention the matched skills, with the
 evidence shown. Nothing is sent to employers or candidates automatically; recruiters decide.
 
-**Scheduling.** `vercel.json` calls `/api/cron/market-scan` every 2 hours. The endpoint requires
-`Authorization: Bearer $CRON_SECRET`, which Vercel sends automatically. Vercel's Hobby plan only runs
-cron jobs once a day. For more frequent scans on Hobby, use Supabase `pg_cron` + `pg_net`, or a GitHub
+**Scheduling.** `vercel.json` calls `/api/cron/market-scan` once a day at 12:00 UTC (6–7 am Texas time),
+because Vercel's Hobby plan only allows daily cron jobs. On Vercel Pro, change the schedule to
+`0 */2 * * *` for a scan every 2 hours. The endpoint requires `Authorization: Bearer $CRON_SECRET`, which
+Vercel sends automatically. Recruiters can also run a scan any time from Job Radar. For more frequent scans on Hobby, use Supabase `pg_cron` + `pg_net`, or a GitHub
 Actions schedule, calling the same URL with the header. Scans less than 5 minutes apart are skipped. Staff
 can also click "Run scan now".
 
