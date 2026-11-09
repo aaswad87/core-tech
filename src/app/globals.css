@@ -1,0 +1,208 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * CoreTech brand palette (violet + teal). Role-based names so the palette can change without
+ * renaming classes: ink (text), brand (violet), teal (accent), night (dark sections), surface.
+ * shadcn semantic tokens below are mapped onto these.
+ */
+@theme {
+  --color-ink: #111827;
+  --color-brand: #6d28d9;
+  --color-brand-700: #5b21b6;
+  --color-brand-400: #a78bfa;
+  --color-brand-100: #ede9fe;
+  --color-brand-50: #f5f3ff;
+  /* #0d9488 is decorative; use teal-text (#0f766e) for small text on white (AA contrast). */
+  --color-teal: #0d9488;
+  --color-teal-text: #0f766e;
+  --color-teal-glow: #5eead4;
+  --color-night: #130b2b;
+  --color-night-800: #1d1240;
+  --color-night-700: #2c1d5c;
+  --color-surface: #f8f7fc;
+  --color-success: #059669;
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-mesh: mesh 18s ease-in-out infinite alternate;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+    50% { transform: translateY(-14px) rotate(var(--tilt, 0deg)); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes mesh {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(4%, -6%) scale(1.12); }
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-geist-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #111827;
+  --card: #ffffff;
+  --card-foreground: #111827;
+  --popover: #ffffff;
+  --popover-foreground: #111827;
+  /* Violet #6d28d9 on white is 7.1:1 — passes WCAG AA (and AAA for large text). */
+  --primary: #6d28d9;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f3ff;
+  --secondary-foreground: #2e1065;
+  --muted: #f4f4f8;
+  --muted-foreground: #4b5563;
+  --accent: #ede9fe;
+  --accent-foreground: #2e1065;
+  --destructive: #dc2626;
+  --border: #e5e3ef;
+  --input: #d4d0e2;
+  --ring: #7c3aed;
+  --chart-1: #6d28d9;
+  --chart-2: #0d9488;
+  --chart-3: #a78bfa;
+  --chart-4: #5eead4;
+  --chart-5: #94a3b8;
+  --radius: 0.75rem;
+  --sidebar: #130b2b;
+  --sidebar-foreground: #f5f3ff;
+  --sidebar-primary: #a78bfa;
+  --sidebar-primary-foreground: #130b2b;
+  --sidebar-accent: #1d1240;
+  --sidebar-accent-foreground: #f5f3ff;
+  --sidebar-border: #2c1d5c;
+  --sidebar-ring: #5eead4;
+}
+
+.dark {
+  --background: #0c0720;
+  --foreground: #f5f3ff;
+  --card: #130b2b;
+  --card-foreground: #f5f3ff;
+  --popover: #130b2b;
+  --popover-foreground: #f5f3ff;
+  --primary: #a78bfa;
+  --primary-foreground: #130b2b;
+  --secondary: #1d1240;
+  --secondary-foreground: #f5f3ff;
+  --muted: #1d1240;
+  --muted-foreground: #b8b2d1;
+  --accent: #2c1d5c;
+  --accent-foreground: #f5f3ff;
+  --destructive: #f87171;
+  --border: #2c1d5c;
+  --input: #3b2a72;
+  --ring: #5eead4;
+  --chart-1: #a78bfa;
+  --chart-2: #5eead4;
+  --chart-3: #c4b5fd;
+  --chart-4: #2dd4bf;
+  --chart-5: #94a3b8;
+  --sidebar: #0c0720;
+  --sidebar-foreground: #f5f3ff;
+  --sidebar-primary: #a78bfa;
+  --sidebar-primary-foreground: #130b2b;
+  --sidebar-accent: #1d1240;
+  --sidebar-accent-foreground: #f5f3ff;
+  --sidebar-border: #2c1d5c;
+  --sidebar-ring: #5eead4;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    @apply font-sans scroll-smooth;
+  }
+}
+
+/* Motion is decorative only; honor the user's reduced-motion setting everywhere. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scroll-reveal: progressive enhancement only. Without scroll-driven animation support (or with reduced
+   motion) content is simply visible — nothing depends on JavaScript. */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 28%;
+    }
+  }
+}
+
+@utility text-gradient {
+  background-image: linear-gradient(100deg, #7c3aed 0%, #6d28d9 35%, #0d9488 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
