@@ -6,12 +6,12 @@ Build a modern, secure recruiting operations platform for a Texas-based IT and t
 ## Brand
 - CoreTech Recruiting
 - Tagline: Connecting Technical Talent. Powering Business.
-- Palette (violet + teal, adopted 2026-10-30; replaced the original navy/electric blue):
-  - Violet (primary) `#6D28D9` — Tailwind `brand` (`brand-700` `#5B21B6`, `brand-400` `#A78BFA`, `brand-50/100`)
-  - Teal (accent) `#0D9488` — Tailwind `teal`; use `teal-text` `#0F766E` for small text on white
-  - Ink (text) `#111827` — `ink`; Night (dark sections) `#130B2B` — `night`; Surface `#F8F7FC` — `surface`
-  - Signature gradient: violet → teal (`from-brand to-teal`, `text-gradient` utility)
-- Style: light-first, gradient-mesh heroes, rounded (2xl–[2rem]) photo cards, pill buttons, subtle motion that respects reduced-motion.
+- Palette (black + emerald, adopted 2026-11-10 at the owner's request; replaced violet + teal). Token names stayed the same:
+  - Emerald (primary) `#047857` — Tailwind `brand` (`brand-700` `#065F46`, `brand-500` `#10B981`, `brand-400` `#34D399` for text on dark, `brand-50/100`)
+  - Lime (accent) `#84CC16` — Tailwind `teal` (old name kept); use `teal-text` `#4D7C0F` for small text on white
+  - Ink (text) `#0A0F0D` — `ink`; Night (dark sections, header, footer) `#050807` — `night`; Surface `#F5F8F6` — `surface`
+  - Signature gradient: emerald → lime. Buttons/badges: `from-brand-400 to-teal` with **`text-night`** (white text fails contrast on lime). Headlines: `text-gradient` on dark backgrounds, `text-gradient-deep` on light ones.
+- Style: dark heroes (`bg-night` + `GradientMesh tone="dark"` + `Spotlight`), dark glass header, light content sections, rounded (2xl–[2rem]) photo cards, pill buttons. Bold motion — `shine` (light sweep), `parallax` (scroll-driven), `<Tilt>` (3D hover), `glow-border` (animated border), `reveal` — all decorative and disabled for reduced motion / touch (see `globals.css`, `components/marketing/effects.tsx`).
 - Photography: Unsplash-licensed stock in `src/content/photos.ts`. Never present stock people as CoreTech staff, clients, candidates or testimonials.
 
 ## Stack
@@ -86,7 +86,7 @@ Build a modern, secure recruiting operations platform for a Texas-based IT and t
 - Next.js 16: request interception lives in `src/proxy.ts` (not `middleware.ts`). It only refreshes the Supabase session — never rely on it for authorization.
 - Supabase clients: `src/lib/supabase/client.ts` (browser), `server.ts` (`server-only`, per-request), `proxy.ts` (session refresh). All use the publishable key; a secret-key admin client does not exist yet and must be `server-only` when added.
 - Env: `src/lib/env.ts` validates public vars with Zod. Supabase is optional (both vars empty = off); partial config throws.
-- Brand tokens are defined in `src/app/globals.css` (`navy`, `electric`, `cyan`, `cloud`, `success`) and mapped onto shadcn semantic tokens.
+- Brand tokens are defined in `src/app/globals.css` (`ink`, `brand`, `teal`, `night`, `surface`, `success`) and mapped onto shadcn semantic tokens. Hard-coded copies of the palette also live in `src/app/icon.svg`, `scripts/generate-icons.mjs` (re-run it after a palette change), `opengraph-image.tsx`, `manifest.ts`/`layout.tsx` theme color, `global-error.tsx` and the email templates (`lib/interviews/email.ts`, `lib/market/notify.ts`). Bump `VERSION` in `public/sw.js` when icons change.
 - Navigation (`src/config/site.ts`) lists only routes that exist.
 - Checks: `npm run check` runs lint, typecheck, Vitest and build.
 

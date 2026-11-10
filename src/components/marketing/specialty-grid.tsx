@@ -27,15 +27,16 @@ export function SpecialtyGrid({ exclude }: { exclude?: SpecialtySlug }) {
           <li key={s.slug} className={cn("reveal", featured && "lg:col-span-2")}>
             <Link
               href={`/services/${s.slug}`}
-              className="group relative isolate flex h-full min-h-72 flex-col justify-end overflow-hidden rounded-3xl p-6 text-white shadow-lg shadow-brand/10 ring-1 ring-black/5 focus-visible:ring-4 focus-visible:ring-ring/60 focus-visible:outline-none"
+              className="shine group relative isolate flex h-full min-h-72 flex-col justify-end overflow-hidden rounded-3xl p-6 text-white shadow-lg shadow-brand/10 ring-1 ring-black/5 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgb(16_185_129/0.3)] focus-visible:ring-4 focus-visible:ring-ring/60 focus-visible:outline-none"
             >
               <PhotoFill
                 photo={specialtyPhotos[s.slug]}
                 sizes={featured ? "(min-width: 1024px) 66vw, (min-width: 640px) 50vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"}
-                className="-z-20 transition-transform duration-700 ease-out group-hover:scale-110"
+                className="-z-20 saturate-[0.85] transition-all duration-700 ease-out group-hover:scale-110 group-hover:saturate-100"
               />
               <div className="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/70 to-brand/10 transition-opacity duration-500 group-hover:opacity-90" />
-              <span className="mb-auto inline-flex size-11 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/30 backdrop-blur">
+              <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-brand-500/40 via-transparent to-teal/30 opacity-0 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-100" />
+              <span className="mb-auto inline-flex size-11 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/30 backdrop-blur transition-colors duration-500 group-hover:bg-brand-400 group-hover:text-night group-hover:ring-brand-400">
                 <Icon className="size-5" aria-hidden="true" />
               </span>
               <h3 className="mt-6 flex items-center gap-2 text-xl font-semibold">

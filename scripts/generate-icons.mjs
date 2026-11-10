@@ -12,15 +12,15 @@ const outDir = join(root, "public", "icons");
 const gradient = `
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#7c3aed"/>
-      <stop offset="1" stop-color="#0d9488"/>
+      <stop offset="0" stop-color="#059669"/>
+      <stop offset="1" stop-color="#65a30d"/>
     </linearGradient>
   </defs>`;
 
 const mark = (scale, offset) => `
   <g transform="translate(${offset} ${offset}) scale(${scale})">
     <path d="M21.5 10.5a8 8 0 1 0 0 11" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
-    <circle cx="16" cy="16" r="2.75" fill="#5eead4"/>
+    <circle cx="16" cy="16" r="2.75" fill="#bef264"/>
   </g>`;
 
 // "any" purpose: rounded tile, transparent corners (matches the site icon).

@@ -9,7 +9,7 @@
  *
  * Bump VERSION to force clients to drop old caches after changing these rules.
  */
-const VERSION = "v1";
+const VERSION = "v2";
 const OFFLINE_CACHE = `coretech-offline-${VERSION}`;
 const STATIC_CACHE = `coretech-static-${VERSION}`;
 const OFFLINE_URL = "/offline";

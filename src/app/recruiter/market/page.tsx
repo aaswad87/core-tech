@@ -178,7 +178,7 @@ export default async function MarketInboxPage({ searchParams }: PageProps<"/recr
                       </ul>
                     </div>
                     <div className="flex items-start gap-3 md:flex-col md:items-end">
-                      <Badge className="bg-gradient-to-r from-brand to-teal text-white">Fit {m.score}</Badge>
+                      <Badge className="bg-gradient-to-r from-brand-400 to-teal font-semibold text-night">Fit {m.score}</Badge>
                       <span className="text-xs text-muted-foreground">{m.huntName}</span>
                       <a
                         href={m.posting.url}

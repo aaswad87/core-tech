@@ -83,16 +83,16 @@ export function renderInterviewEmail(kind: InterviewEmailKind, d: InterviewEmail
 
   const rowHtml = rows
     .map(([label, value]) => {
-      const shown = label === "Join link" ? `<a href="${escapeHtml(value)}" style="color:#5b21b6">${escapeHtml(value)}</a>` : escapeHtml(value);
+      const shown = label === "Join link" ? `<a href="${escapeHtml(value)}" style="color:#065f46">${escapeHtml(value)}</a>` : escapeHtml(value);
       return `<tr><td style="padding:6px 16px 6px 0;color:#6b7280;font-size:14px;vertical-align:top;white-space:nowrap">${escapeHtml(label)}</td><td style="padding:6px 0;font-size:14px">${shown}</td></tr>`;
     })
     .join("");
 
-  const html = `<!doctype html><html><body style="margin:0;background:#f8f7fc;font-family:Arial,Helvetica,sans-serif;color:#111827">
+  const html = `<!doctype html><html><body style="margin:0;background:#f5f8f6;font-family:Arial,Helvetica,sans-serif;color:#111827">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px">
     <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:16px;padding:28px">
       <tr><td>
-        <div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#6d28d9;text-transform:uppercase">CoreTech Recruiting</div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#047857;text-transform:uppercase">CoreTech Recruiting</div>
         <h1 style="font-size:22px;margin:8px 0 12px">${escapeHtml(subject)}</h1>
         <p style="font-size:15px;margin:0 0 8px">${escapeHtml(greeting)}</p>
         <p style="font-size:15px;margin:0 0 16px">${escapeHtml(intro)}</p>
@@ -100,7 +100,7 @@ export function renderInterviewEmail(kind: InterviewEmailKind, d: InterviewEmail
         ${kind !== "cancelled" && d.instructions ? `<p style="font-size:14px;margin:16px 0 0;white-space:pre-line">${escapeHtml(d.instructions)}</p>` : ""}
       </td></tr>
       <tr><td style="padding-top:20px">
-        <a href="${escapeHtml(d.portalUrl)}" style="display:inline-block;background:#6d28d9;color:#ffffff;padding:12px 20px;border-radius:999px;text-decoration:none;font-weight:600">View in your portal</a>
+        <a href="${escapeHtml(d.portalUrl)}" style="display:inline-block;background:#047857;color:#ffffff;padding:12px 20px;border-radius:999px;text-decoration:none;font-weight:600">View in your portal</a>
       </td></tr>
       <tr><td style="padding-top:20px;color:#6b7280;font-size:12px">You're receiving this because you have an application with CoreTech Recruiting. You can turn off application emails under Preferences in your portal.</td></tr>
     </table>

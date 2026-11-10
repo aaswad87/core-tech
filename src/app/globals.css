@@ -5,25 +5,27 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * CoreTech brand palette (violet + teal). Role-based names so the palette can change without
- * renaming classes: ink (text), brand (violet), teal (accent), night (dark sections), surface.
- * shadcn semantic tokens below are mapped onto these.
+ * CoreTech brand palette (black + emerald, adopted 2026-11-10; replaced violet + teal). Role-based names
+ * so the palette can change without renaming classes: ink (text), brand (emerald), teal (lime accent —
+ * the token keeps its old name), night (near-black dark sections), surface. shadcn tokens map onto these.
  */
 @theme {
-  --color-ink: #111827;
-  --color-brand: #6d28d9;
-  --color-brand-700: #5b21b6;
-  --color-brand-400: #a78bfa;
-  --color-brand-100: #ede9fe;
-  --color-brand-50: #f5f3ff;
-  /* #0d9488 is decorative; use teal-text (#0f766e) for small text on white (AA contrast). */
-  --color-teal: #0d9488;
-  --color-teal-text: #0f766e;
-  --color-teal-glow: #5eead4;
-  --color-night: #130b2b;
-  --color-night-800: #1d1240;
-  --color-night-700: #2c1d5c;
-  --color-surface: #f8f7fc;
+  --color-ink: #0a0f0d;
+  /* Emerald. #047857 on white is 5.5:1 (AA); use brand-400 for text on dark backgrounds. */
+  --color-brand: #047857;
+  --color-brand-700: #065f46;
+  --color-brand-500: #10b981;
+  --color-brand-400: #34d399;
+  --color-brand-100: #d1fae5;
+  --color-brand-50: #ecfdf5;
+  /* Lime accent. #84cc16 is decorative; use teal-text (#4d7c0f, 5.3:1) for small text on white. */
+  --color-teal: #84cc16;
+  --color-teal-text: #4d7c0f;
+  --color-teal-glow: #bef264;
+  --color-night: #050807;
+  --color-night-800: #0b1310;
+  --color-night-700: #15231d;
+  --color-surface: #f5f8f6;
   --color-success: #059669;
 
   --animate-float: float 7s ease-in-out infinite;
@@ -91,72 +93,72 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #111827;
+  --foreground: #0a0f0d;
   --card: #ffffff;
-  --card-foreground: #111827;
+  --card-foreground: #0a0f0d;
   --popover: #ffffff;
-  --popover-foreground: #111827;
-  /* Violet #6d28d9 on white is 7.1:1 — passes WCAG AA (and AAA for large text). */
-  --primary: #6d28d9;
+  --popover-foreground: #0a0f0d;
+  /* Emerald #047857 on white is 5.5:1 — passes WCAG AA. */
+  --primary: #047857;
   --primary-foreground: #ffffff;
-  --secondary: #f5f3ff;
-  --secondary-foreground: #2e1065;
-  --muted: #f4f4f8;
+  --secondary: #ecfdf5;
+  --secondary-foreground: #022c22;
+  --muted: #f2f5f3;
   --muted-foreground: #4b5563;
-  --accent: #ede9fe;
-  --accent-foreground: #2e1065;
+  --accent: #d1fae5;
+  --accent-foreground: #022c22;
   --destructive: #dc2626;
-  --border: #e5e3ef;
-  --input: #d4d0e2;
-  --ring: #7c3aed;
-  --chart-1: #6d28d9;
-  --chart-2: #0d9488;
-  --chart-3: #a78bfa;
-  --chart-4: #5eead4;
+  --border: #e2e8e4;
+  --input: #cfd8d3;
+  --ring: #10b981;
+  --chart-1: #047857;
+  --chart-2: #84cc16;
+  --chart-3: #34d399;
+  --chart-4: #bef264;
   --chart-5: #94a3b8;
   --radius: 0.75rem;
-  --sidebar: #130b2b;
-  --sidebar-foreground: #f5f3ff;
-  --sidebar-primary: #a78bfa;
-  --sidebar-primary-foreground: #130b2b;
-  --sidebar-accent: #1d1240;
-  --sidebar-accent-foreground: #f5f3ff;
-  --sidebar-border: #2c1d5c;
-  --sidebar-ring: #5eead4;
+  --sidebar: #050807;
+  --sidebar-foreground: #ecfdf5;
+  --sidebar-primary: #34d399;
+  --sidebar-primary-foreground: #050807;
+  --sidebar-accent: #0b1310;
+  --sidebar-accent-foreground: #ecfdf5;
+  --sidebar-border: #15231d;
+  --sidebar-ring: #bef264;
 }
 
 .dark {
-  --background: #0c0720;
-  --foreground: #f5f3ff;
-  --card: #130b2b;
-  --card-foreground: #f5f3ff;
-  --popover: #130b2b;
-  --popover-foreground: #f5f3ff;
-  --primary: #a78bfa;
-  --primary-foreground: #130b2b;
-  --secondary: #1d1240;
-  --secondary-foreground: #f5f3ff;
-  --muted: #1d1240;
-  --muted-foreground: #b8b2d1;
-  --accent: #2c1d5c;
-  --accent-foreground: #f5f3ff;
+  --background: #050807;
+  --foreground: #ecfdf5;
+  --card: #0b1310;
+  --card-foreground: #ecfdf5;
+  --popover: #0b1310;
+  --popover-foreground: #ecfdf5;
+  --primary: #34d399;
+  --primary-foreground: #050807;
+  --secondary: #0b1310;
+  --secondary-foreground: #ecfdf5;
+  --muted: #0b1310;
+  --muted-foreground: #a7b8af;
+  --accent: #15231d;
+  --accent-foreground: #ecfdf5;
   --destructive: #f87171;
-  --border: #2c1d5c;
-  --input: #3b2a72;
-  --ring: #5eead4;
-  --chart-1: #a78bfa;
-  --chart-2: #5eead4;
-  --chart-3: #c4b5fd;
-  --chart-4: #2dd4bf;
+  --border: #15231d;
+  --input: #1f3229;
+  --ring: #34d399;
+  --chart-1: #34d399;
+  --chart-2: #bef264;
+  --chart-3: #6ee7b7;
+  --chart-4: #a3e635;
   --chart-5: #94a3b8;
-  --sidebar: #0c0720;
-  --sidebar-foreground: #f5f3ff;
-  --sidebar-primary: #a78bfa;
-  --sidebar-primary-foreground: #130b2b;
-  --sidebar-accent: #1d1240;
-  --sidebar-accent-foreground: #f5f3ff;
-  --sidebar-border: #2c1d5c;
-  --sidebar-ring: #5eead4;
+  --sidebar: #050807;
+  --sidebar-foreground: #ecfdf5;
+  --sidebar-primary: #34d399;
+  --sidebar-primary-foreground: #050807;
+  --sidebar-accent: #0b1310;
+  --sidebar-accent-foreground: #ecfdf5;
+  --sidebar-border: #15231d;
+  --sidebar-ring: #bef264;
 }
 
 @layer base {
@@ -200,9 +202,91 @@
   }
 }
 
+/* Bright animated gradient text — for dark backgrounds. */
 @utility text-gradient {
-  background-image: linear-gradient(100deg, #7c3aed 0%, #6d28d9 35%, #0d9488 100%);
+  background-image: linear-gradient(100deg, #34d399 0%, #a3e635 45%, #10b981 90%, #34d399 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  animation: gradient-pan 8s ease-in-out infinite alternate;
+}
+
+/* Deeper gradient text — for light backgrounds (keeps large-text contrast above 3:1). */
+@utility text-gradient-deep {
+  background-image: linear-gradient(100deg, #065f46 0%, #047857 45%, #4d7c0f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes gradient-pan {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+/* --- Photo and card effects (all decorative; disabled by the reduced-motion rule above) --- */
+
+/* Light sweep across a photo card on hover. Put on a "group relative overflow-hidden" element. */
+@utility shine {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.28) 48%, transparent 66%);
+    transform: translateX(-120%);
+    transition: transform 900ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  &:hover::after,
+  &:focus-visible::after {
+    transform: translateX(120%);
+  }
+}
+
+/* Animated emerald/lime border glow. The element needs a background of its own. */
+@property --glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes glow-spin {
+  to { --glow-angle: 360deg; }
+}
+@utility glow-border {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(from var(--glow-angle), transparent 0deg, #10b981 70deg, #a3e635 120deg, transparent 180deg, transparent 360deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: glow-spin 6s linear infinite;
+  }
+}
+
+/* Slow parallax drift while a photo scrolls through the viewport (scroll-driven; no JavaScript). */
+@keyframes parallax-drift {
+  from { transform: translateY(-6%) scale(1.12); }
+  to { transform: translateY(6%) scale(1.12); }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .parallax {
+      animation: parallax-drift linear both;
+      animation-timeline: view();
+    }
+  }
+}
+
+/* Soft emerald glow that follows the pointer (--spot-x / --spot-y are set by <Spotlight>). */
+@utility spotlight {
+  background: radial-gradient(520px circle at var(--spot-x, 70%) var(--spot-y, 30%), rgb(16 185 129 / 0.22), transparent 60%);
 }

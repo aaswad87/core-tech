@@ -15,7 +15,7 @@ export function ApplyButton({ jobId }: { jobId: string }) {
     <form action={action} className="grid gap-3">
       <input type="hidden" name="jobId" value={jobId} />
       <FormMessage state={state} />
-      <SubmitButton size="lg" className="h-11 w-full rounded-full bg-gradient-to-r from-brand to-teal shadow-md shadow-brand/25" pendingLabel="Sending…">
+      <SubmitButton size="lg" className="h-11 w-full rounded-full bg-gradient-to-r from-brand-400 to-teal font-semibold text-night shadow-md shadow-brand/25" pendingLabel="Sending…">
         Apply for this job
       </SubmitButton>
       <p className="text-xs text-muted-foreground">

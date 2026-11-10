@@ -48,7 +48,7 @@ export default async function MatchDetailPage({ params }: PageProps<"/recruiter/
         <div className="grid content-start gap-6">
           <header>
             <div className="flex flex-wrap items-center gap-2">
-              <Badge className="bg-gradient-to-r from-brand to-teal text-white">Fit {match.score}</Badge>
+              <Badge className="bg-gradient-to-r from-brand-400 to-teal font-semibold text-night">Fit {match.score}</Badge>
               <Badge variant="secondary">{STATUS_LABELS[match.status] ?? match.status}</Badge>
               <span className="text-sm text-muted-foreground">via {SOURCE_SHORT_LABELS[p.source]}</span>
             </div>

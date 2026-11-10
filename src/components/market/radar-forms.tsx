@@ -37,7 +37,7 @@ export function RunScanButton({ disabled, disabledReason }: { disabled?: boolean
         size="lg"
         disabled={disabled}
         title={disabled ? disabledReason : undefined}
-        className="h-10 rounded-full bg-gradient-to-r from-brand to-teal px-5 shadow-md shadow-brand/25 hover:opacity-95"
+        className="h-10 rounded-full bg-gradient-to-r from-brand-400 to-teal font-semibold text-night px-5 shadow-md shadow-brand/25 hover:opacity-95"
         pendingLabel="Scanning job boards…"
       >
         <RadarIcon aria-hidden="true" /> Run scan now
@@ -235,7 +235,7 @@ export function MatchActions({ matchId, status, pursued }: { matchId: string; st
         {!pursued && (
           <form action={pursueAction}>
             <input type="hidden" name="matchId" value={matchId} />
-            <SubmitButton className="h-10 rounded-full bg-gradient-to-r from-brand to-teal px-5 shadow-md shadow-brand/25" pendingLabel="Saving…">
+            <SubmitButton className="h-10 rounded-full bg-gradient-to-r from-brand-400 to-teal font-semibold text-night px-5 shadow-md shadow-brand/25" pendingLabel="Saving…">
               Pursue this opportunity
             </SubmitButton>
           </form>

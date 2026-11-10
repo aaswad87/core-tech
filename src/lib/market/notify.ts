@@ -49,25 +49,25 @@ export function renderDigestEmail(items: DigestItem[], appUrl: string): { subjec
       const meta = [i.companyName, where(i), i.publisher && `via ${i.publisher}`].filter(Boolean).join(" · ");
       return `
       <tr><td style="padding:14px 0;border-bottom:1px solid #e5e3ef">
-        <a href="${escapeHtml(matchUrl(appUrl, i.matchId))}" style="color:#5b21b6;font-size:16px;font-weight:600;text-decoration:none">${escapeHtml(i.title)}</a>
+        <a href="${escapeHtml(matchUrl(appUrl, i.matchId))}" style="color:#065f46;font-size:16px;font-weight:600;text-decoration:none">${escapeHtml(i.title)}</a>
         <div style="color:#4b5563;font-size:14px;margin-top:4px">${escapeHtml(meta)}</div>
-        <div style="color:#0f766e;font-size:13px;margin-top:6px">Fit ${i.score} · matched: ${escapeHtml(i.matchedTerms.join(", "))} · hunt: ${escapeHtml(i.huntName)}</div>
+        <div style="color:#4d7c0f;font-size:13px;margin-top:6px">Fit ${i.score} · matched: ${escapeHtml(i.matchedTerms.join(", "))} · hunt: ${escapeHtml(i.huntName)}</div>
       </td></tr>`;
     })
     .join("");
 
-  const html = `<!doctype html><html><body style="margin:0;background:#f8f7fc;font-family:Arial,Helvetica,sans-serif;color:#111827">
+  const html = `<!doctype html><html><body style="margin:0;background:#f5f8f6;font-family:Arial,Helvetica,sans-serif;color:#111827">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px">
     <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:16px;padding:28px">
       <tr><td>
-        <div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#6d28d9;text-transform:uppercase">CoreTech Job Radar</div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#047857;text-transform:uppercase">CoreTech Job Radar</div>
         <h1 style="font-size:22px;margin:8px 0 4px">${escapeHtml(subjectFor(items).replace(/^Job Radar: /, ""))}</h1>
         <p style="color:#4b5563;font-size:14px;margin:0 0 8px">New postings that fit your saved hunts. Review each one before reaching out.</p>
       </td></tr>
       ${rows}
       ${extra > 0 ? `<tr><td style="padding-top:14px;color:#4b5563;font-size:14px">…and ${extra} more in the Job Radar inbox.</td></tr>` : ""}
       <tr><td style="padding-top:20px">
-        <a href="${escapeHtml(`${appUrl}/recruiter/market`)}" style="display:inline-block;background:#6d28d9;color:#ffffff;padding:12px 20px;border-radius:999px;text-decoration:none;font-weight:600">Open Job Radar</a>
+        <a href="${escapeHtml(`${appUrl}/recruiter/market`)}" style="display:inline-block;background:#047857;color:#ffffff;padding:12px 20px;border-radius:999px;text-decoration:none;font-weight:600">Open Job Radar</a>
       </td></tr>
       <tr><td style="padding-top:20px;color:#6b7280;font-size:12px">You get this because you subscribed to these hunts in CoreTech. Unsubscribe from a hunt on its page.</td></tr>
     </table>

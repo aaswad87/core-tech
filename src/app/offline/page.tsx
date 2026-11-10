@@ -17,7 +17,7 @@ export default function OfflinePage() {
     <section className="relative overflow-hidden">
       <GradientMesh />
       <Container className="relative max-w-xl py-24 text-center">
-        <span className="mx-auto inline-flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-teal text-white shadow-lg shadow-brand/30">
+        <span className="mx-auto inline-flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-400 to-teal text-night shadow-lg shadow-brand/30">
           <WifiOffIcon className="size-7" aria-hidden="true" />
         </span>
         <h1 className="mt-6 text-3xl font-bold tracking-tight text-ink">You&apos;re offline</h1>

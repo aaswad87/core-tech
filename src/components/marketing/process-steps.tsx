@@ -8,7 +8,7 @@ export function ProcessSteps({ steps }: { steps: readonly ProcessStep[] }) {
           key={step.title}
           className="reveal group relative rounded-3xl border border-border bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-xl hover:shadow-brand/10"
         >
-          <span className="inline-flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-teal text-lg font-bold text-white shadow-md shadow-brand/30">
+          <span className="inline-flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-400 to-teal text-lg font-bold text-night shadow-md shadow-brand/30">
             {index + 1}
           </span>
           <h3 className="mt-5 text-lg font-semibold text-ink">{step.title}</h3>

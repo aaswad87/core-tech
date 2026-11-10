@@ -11,7 +11,7 @@ export function SiteFooter() {
   return (
     <footer className="relative overflow-hidden bg-night text-white">
       <div aria-hidden="true" className="h-px bg-gradient-to-r from-transparent via-brand-400 to-transparent" />
-      <div aria-hidden="true" className="pointer-events-none absolute -top-40 left-1/4 size-96 rounded-full bg-brand/30 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -top-40 left-1/4 size-96 rounded-full bg-brand-500/20 blur-3xl" />
       <Container className="relative grid gap-10 py-14 md:grid-cols-[1.5fr_repeat(3,1fr)]">
         <div className="space-y-3">
           <Logo tone="dark" />

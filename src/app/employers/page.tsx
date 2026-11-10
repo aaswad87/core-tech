@@ -41,7 +41,7 @@ export default function EmployersPage() {
         intro="Direct-hire recruiting for network, security, cloud, telecom, and IT infrastructure teams."
         breadcrumbs={[{ title: "Employers", href: "/employers" }]}
         actions={
-          <Button asChild size="lg" className="h-11 rounded-full bg-gradient-to-r from-brand to-teal px-5 shadow-lg shadow-brand/25 hover:opacity-95">
+          <Button asChild size="lg" className="h-11 rounded-full bg-gradient-to-r from-brand-400 to-teal font-semibold text-night px-5 shadow-[0_0_24px_rgb(16_185_129/0.4)] hover:opacity-95">
             <Link href="#hiring-request">Submit a hiring request</Link>
           </Button>
         }

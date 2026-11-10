@@ -47,14 +47,14 @@ export default async function CandidatesPage({ searchParams }: PageProps<"/candi
         breadcrumbs={[{ title: "Candidates", href: "/candidates" }]}
         actions={
           <>
-            <Button asChild size="lg" className="h-11 rounded-full bg-gradient-to-r from-brand to-teal px-5 shadow-lg shadow-brand/25 hover:opacity-95">
+            <Button asChild size="lg" className="h-11 rounded-full bg-gradient-to-r from-brand-400 to-teal font-semibold text-night px-5 shadow-[0_0_24px_rgb(16_185_129/0.4)] hover:opacity-95">
               <Link href="/jobs">Browse open jobs</Link>
             </Button>
             <Button
               asChild
               size="lg"
               variant="outline"
-              className="h-11 rounded-full border-brand/25 bg-white/70 px-5 backdrop-blur hover:bg-brand-50"
+              className="h-11 rounded-full border-white/20 bg-white/5 px-5 text-white backdrop-blur hover:border-brand-400/60 hover:bg-white/10 hover:text-white"
             >
               <Link href="#talk-to-a-recruiter">Talk to a recruiter</Link>
             </Button>
@@ -76,7 +76,7 @@ export default async function CandidatesPage({ searchParams }: PageProps<"/candi
           title="Create a free candidate account"
           intro="An account lets you keep your details in one place. More candidate tools are on the way."
         >
-          <Button asChild size="lg" className="h-11 rounded-full bg-gradient-to-r from-brand to-teal px-5 shadow-lg shadow-brand/25 hover:opacity-95">
+          <Button asChild size="lg" className="h-11 rounded-full bg-gradient-to-r from-brand-400 to-teal font-semibold text-night px-5 shadow-[0_0_24px_rgb(16_185_129/0.4)] hover:opacity-95">
             <Link href="/signup">Create an account</Link>
           </Button>
         </Section>
