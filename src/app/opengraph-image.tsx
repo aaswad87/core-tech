@@ -23,10 +23,11 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          <svg width="88" height="88" viewBox="0 0 32 32">
-            <rect width="32" height="32" rx="9" fill="#059669" />
-            <path d="M21.5 10.5a8 8 0 1 0 0 11" fill="none" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" />
-            <circle cx="16" cy="16" r="2.75" fill="#BEF264" />
+          <svg width="96" height="96" viewBox="0 0 64 64">
+            <path d="M32 5 L55.4 18.5 L55.4 45.5 L32 59 L8.6 45.5 L8.6 18.5 Z" fill="#050807" stroke="#34D399" strokeWidth="3.5" strokeLinejoin="round" />
+            <path d="M48.5 24.2 H34.8 A11 11 0 1 0 32.5 41.5" fill="none" stroke="#FFFFFF" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M42 24.2 V37" stroke="#FFFFFF" strokeWidth="4.5" strokeLinecap="round" />
+            <circle cx="42" cy="41.5" r="3.6" fill="#BEF264" />
           </svg>
           <div style={{ display: "flex", fontSize: 48, fontWeight: 700 }}>
             CoreTech&nbsp;<span style={{ color: "#A7F3D0", fontWeight: 400 }}>Recruiting</span>
