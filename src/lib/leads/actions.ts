@@ -1,8 +1,13 @@
 "use server";
 
+import { randomUUID } from "node:crypto";
+
 import { headers } from "next/headers";
 
-import { getSupabaseSecretKey, isLeadCaptureConfigured } from "@/lib/env.server";
+import { siteConfig } from "@/config/site";
+import { getMarketConfig, getSupabaseSecretKey, isLeadCaptureConfigured } from "@/lib/env.server";
+import { type LeadForEmail, leadRecipient, renderLeadEmail, safeReplyTo } from "@/lib/leads/notify";
+import { sendEmail } from "@/lib/market/notify";
 import type { FormState } from "@/lib/forms";
 import { clientIpFromHeaders, hashIp, isRateLimited, LEAD_RATE_LIMITS, windowStart } from "@/lib/leads/rate-limit";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -24,6 +29,31 @@ const FAILED: FormState = {
   status: "error",
   message: "Your message could not be sent. Please try again in a few minutes.",
 };
+
+/** Emails the new lead to the business inbox via Resend, when email is configured. Never throws. */
+async function notifyInbox(row: ReturnType<typeof toLeadRow> | null): Promise<void> {
+  if (!row) return;
+  try {
+    const { email } = getMarketConfig();
+    if (!email) return;
+    const lead: LeadForEmail = { ...row };
+    const { subject, html, text } = renderLeadEmail(lead, siteConfig.url);
+    const result = await sendEmail(fetch, {
+      apiKey: email.apiKey,
+      from: email.from,
+      to: leadRecipient(lead.type),
+      replyTo: safeReplyTo(lead.email),
+      subject,
+      html,
+      text,
+      category: "website_lead",
+      idempotencyKey: `lead-${randomUUID()}`,
+    });
+    if (!result.ok) console.error("Lead email alert failed", result.error);
+  } catch (error) {
+    console.error("Lead email alert failed", error instanceof Error ? error.message : error);
+  }
+}
 
 function echo(formData: FormData): Record<string, string> {
   const values: Record<string, string> = {};
@@ -62,6 +92,7 @@ export async function submitLead(_prev: FormState, formData: FormData): Promise<
   const ip = clientIpFromHeaders(await headers());
   const ipHash = ip ? hashIp(ip, secret) : null;
 
+  let savedRow: ReturnType<typeof toLeadRow> | null = null;
   try {
     const supabase = createAdminClient();
 
@@ -112,10 +143,14 @@ export async function submitLead(_prev: FormState, formData: FormData): Promise<
       ip_hash: ipHash,
     });
     if (insertError) throw insertError;
+    savedRow = row;
   } catch (error) {
     console.error("Lead submission failed", error instanceof Error ? error.message : error);
     return { ...FAILED, values };
   }
+
+  // The lead is saved; the email alert is best-effort and never changes what the visitor sees.
+  await notifyInbox(savedRow);
 
   return { status: "success", message: SUCCESS_MESSAGES[input.type] };
 }

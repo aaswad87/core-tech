@@ -54,5 +54,10 @@ export const siteConfig = {
   description:
     "CoreTech Recruiting is a Texas-based IT and telecommunications recruiting consultancy placing technical talent in networking, cybersecurity, cloud, and telecom roles.",
   location: "Texas, USA",
+  /** Public business mailboxes (Zoho Mail, set up 2026-11-18). Website form notifications go here too. */
+  email: {
+    info: "info@coretechrecruiting.com",
+    sales: "sales@coretechrecruiting.com",
+  },
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/+$/, ""),
 } as const;

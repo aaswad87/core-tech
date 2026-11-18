@@ -17,6 +17,14 @@ export function SiteFooter() {
           <Logo tone="dark" />
           <p className="max-w-xs text-sm text-white/75">{siteConfig.tagline}</p>
           <p className="text-sm text-white/70">{siteConfig.location}</p>
+          <p className="text-sm">
+            <a
+              href={`mailto:${siteConfig.email.info}`}
+              className="text-white/75 hover:text-teal-glow focus-visible:text-teal-glow focus-visible:outline-none"
+            >
+              {siteConfig.email.info}
+            </a>
+          </p>
           <InstallAppButton className="mt-2 rounded-full border-white/30 bg-white/10 text-white hover:bg-white/20 hover:text-white" />
         </div>
         {footerNav.map((group) => (

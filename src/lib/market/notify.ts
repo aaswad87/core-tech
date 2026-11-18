@@ -122,6 +122,8 @@ export async function sendEmail(
     text: string;
     idempotencyKey: string;
     category?: string;
+    /** One plain address that replies should go to (e.g. the website visitor). */
+    replyTo?: string | null;
     /** Base64 content, e.g. a calendar invite. */
     attachments?: { filename: string; content: string; content_type?: string }[];
   },
@@ -141,6 +143,7 @@ export async function sendEmail(
         html: opts.html,
         text: opts.text,
         tags: [{ name: "category", value: opts.category ?? "job_radar" }],
+        ...(opts.replyTo ? { reply_to: opts.replyTo } : {}),
         ...(opts.attachments?.length ? { attachments: opts.attachments } : {}),
       }),
       signal: AbortSignal.timeout(15_000),

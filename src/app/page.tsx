@@ -102,6 +102,11 @@ export default function HomePage() {
           logo: absoluteUrl("/icon.svg"),
           areaServed: "US",
           address: { "@type": "PostalAddress", addressRegion: "TX", addressCountry: "US" },
+          email: siteConfig.email.info,
+          contactPoint: [
+            { "@type": "ContactPoint", contactType: "customer support", email: siteConfig.email.info },
+            { "@type": "ContactPoint", contactType: "sales", email: siteConfig.email.sales },
+          ],
         }}
       />
 

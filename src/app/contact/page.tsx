@@ -1,4 +1,4 @@
-import { BriefcaseIcon, MapPinIcon, UserSearchIcon } from "lucide-react";
+import { BriefcaseIcon, MailIcon, MapPinIcon, UserSearchIcon } from "lucide-react";
 import Link from "next/link";
 
 import { LeadFormSection } from "@/components/leads/lead-form-section";
@@ -38,6 +38,28 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
         </section>
 
         <aside className="grid content-start gap-6">
+          <div className="rounded-xl bg-surface p-6">
+            <MailIcon className="size-6 text-brand" aria-hidden="true" />
+            <h2 className="mt-3 font-semibold text-ink">Email us</h2>
+            <dl className="mt-2 grid gap-2 text-sm">
+              <div>
+                <dt className="text-muted-foreground">General questions</dt>
+                <dd>
+                  <a href={`mailto:${siteConfig.email.info}`} className="font-medium text-brand hover:underline">
+                    {siteConfig.email.info}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="text-muted-foreground">Hiring and partnerships</dt>
+                <dd>
+                  <a href={`mailto:${siteConfig.email.sales}`} className="font-medium text-brand hover:underline">
+                    {siteConfig.email.sales}
+                  </a>
+                </dd>
+              </div>
+            </dl>
+          </div>
           <div className="rounded-xl bg-surface p-6">
             <BriefcaseIcon className="size-6 text-brand" aria-hidden="true" />
             <h2 className="mt-3 font-semibold text-ink">Hiring?</h2>
