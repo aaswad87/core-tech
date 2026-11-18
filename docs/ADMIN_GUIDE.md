@@ -58,7 +58,7 @@ money you've committed to workers that clients haven't paid yet.
 | Setting | Where |
 |---|---|
 | Email sending (interview emails, Job Radar alerts) | Resend + Vercel environment variables |
-| AI resume suggestions on/off and limits | Vercel environment variables (`AI_*`, `OPENAI_*`) — only after the privacy review |
+| AI resume suggestions on/off and limits | Vercel environment variables (`AI_*`, `ANTHROPIC_*`) — only after the privacy review |
 | Job Radar data sources | Vercel environment variables (`JSEARCH_*`, `ADZUNA_*`) |
 | Who can sign in to the Supabase dashboard | Supabase → Organization → Team |
 | Legal pages' draft banner | `LEGAL_REVIEWED` in the code (after legal review) |

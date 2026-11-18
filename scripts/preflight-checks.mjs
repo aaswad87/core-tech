@@ -53,7 +53,7 @@ export function runPreflight(env, facts = {}) {
 
   // AI
   if (env.AI_PRIVACY_REVIEW_APPROVED?.trim() === "true") {
-    if (!has(env, "OPENAI_API_KEY") || !has(env, "OPENAI_MODEL")) add("fail", "AI parsing", "Privacy review flag is on but OPENAI_API_KEY / OPENAI_MODEL are missing.");
+    if (!has(env, "ANTHROPIC_API_KEY")) add("fail", "AI parsing", "Privacy review flag is on but ANTHROPIC_API_KEY is missing.");
     else if (!has(env, "AI_MONTHLY_TOKEN_BUDGET")) add("warn", "AI parsing", "On, without AI_MONTHLY_TOKEN_BUDGET. Set a budget that matches your spending limit.");
     else add("pass", "AI parsing", "On, with a monthly token budget.");
   } else add("pass", "AI parsing", "Off (turn on only after the privacy review in the README).");

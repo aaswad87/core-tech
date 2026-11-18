@@ -1,17 +1,21 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { parseAiConfig } from "./config";
-import { proposeWithOpenAI } from "./openai";
+import Anthropic from "@anthropic-ai/sdk";
+
+import { type MessagesClient, proposeWithClaude } from "./claude";
+import { DEFAULT_CLAUDE_MODEL, parseAiConfig } from "./config";
 import { checkProposal, evidenceFound, PROPOSAL_JSON_SCHEMA, preselect } from "./proposal";
 import { normalizeResumeText, redactContactDetails } from "./redact";
 
 describe("parseAiConfig", () => {
   it("stays off until the privacy review flag and credentials are set", () => {
-    const off = parseAiConfig({ OPENAI_API_KEY: "sk-test", OPENAI_MODEL: "model-x" });
+    const off = parseAiConfig({ ANTHROPIC_API_KEY: "sk-ant-test" });
     expect(off).toEqual({ enabled: false, missing: ["Privacy and security review (AI_PRIVACY_REVIEW_APPROVED=true)"] });
-    expect(parseAiConfig({ AI_PRIVACY_REVIEW_APPROVED: "true" })).toMatchObject({ enabled: false, missing: ["OPENAI_API_KEY", "OPENAI_MODEL"] });
-    expect(parseAiConfig({ AI_PRIVACY_REVIEW_APPROVED: "true", OPENAI_API_KEY: "sk-test", OPENAI_MODEL: "model-x", AI_MONTHLY_TOKEN_BUDGET: "500000" })).toMatchObject({
+    expect(parseAiConfig({ AI_PRIVACY_REVIEW_APPROVED: "true" })).toMatchObject({ enabled: false, missing: ["ANTHROPIC_API_KEY"] });
+    expect(parseAiConfig({ AI_PRIVACY_REVIEW_APPROVED: "true", ANTHROPIC_API_KEY: "sk-ant-test", AI_MONTHLY_TOKEN_BUDGET: "500000" })).toMatchObject({
       enabled: true,
+      provider: "anthropic",
+      model: DEFAULT_CLAUDE_MODEL,
       hourlyLimit: 10,
       monthlyLimit: 200,
       monthlyTokenBudget: 500000,
@@ -20,7 +24,9 @@ describe("parseAiConfig", () => {
 
   it("rejects bad limits", () => {
     expect(() => parseAiConfig({ AI_HOURLY_LIMIT: "0" })).toThrow(/AI_HOURLY_LIMIT/);
-    expect(() => parseAiConfig({ OPENAI_MODEL: "bad model; drop" })).toThrow(/OPENAI_MODEL/);
+    expect(() => parseAiConfig({ ANTHROPIC_MODEL: "bad model; drop" })).toThrow(/ANTHROPIC_MODEL/);
+    expect(() => parseAiConfig({ ANTHROPIC_MODEL: "gpt-x" })).toThrow(/ANTHROPIC_MODEL/);
+    expect(DEFAULT_CLAUDE_MODEL).toBe("claude-haiku-5-5");
   });
 });
 
@@ -119,25 +125,39 @@ describe("PROPOSAL_JSON_SCHEMA", () => {
   });
 });
 
-describe("proposeWithOpenAI", () => {
-  const ok = (body: unknown, status = 200) => vi.fn(async () => new Response(JSON.stringify(body), { status }));
+describe("proposeWithClaude", () => {
+  type CreateArgs = Parameters<MessagesClient["messages"]["create"]>[0];
+  const fake = (impl: (args: CreateArgs) => unknown) => {
+    const create = vi.fn(async (args: CreateArgs) => impl(args));
+    return { client: { messages: { create } } as unknown as MessagesClient, create };
+  };
+  const message = (text: string, stop_reason = "end_turn") => ({
+    content: [{ type: "thinking", thinking: "" }, { type: "text", text }],
+    stop_reason,
+    usage: { input_tokens: 900, output_tokens: 400 },
+  });
 
-  it("returns parsed JSON and token usage, without storing at the provider", async () => {
-    const fetchImpl = ok({ choices: [{ message: { content: JSON.stringify(goodJson) }, finish_reason: "stop" }], usage: { prompt_tokens: 900, completion_tokens: 400 } });
-    const r = await proposeWithOpenAI(fetchImpl as unknown as typeof fetch, { apiKey: "sk", model: "m", resumeText: "text" });
-    expect(r).toMatchObject({ ok: true, inputTokens: 900, outputTokens: 400 });
-    const body = JSON.parse((fetchImpl.mock.calls[0] as unknown as [string, RequestInit])[1].body as string);
-    expect(body.store).toBe(false);
-    expect(body.response_format.json_schema.strict).toBe(true);
+  it("asks Claude for the strict JSON schema and returns parsed JSON with token usage", async () => {
+    const { client, create } = fake(() => message(JSON.stringify(goodJson)));
+    const r = await proposeWithClaude(client, { model: "claude-haiku-5-5", resumeText: "text" });
+    expect(r).toMatchObject({ ok: true, inputTokens: 900, outputTokens: 400, json: goodJson });
+    const args = create.mock.calls[0][0] as CreateArgs & { output_config: { format: { type: string; schema: unknown }; effort: string } };
+    expect(args.model).toBe("claude-haiku-5-5");
+    expect(args.output_config.format).toEqual({ type: "json_schema", schema: PROPOSAL_JSON_SCHEMA });
+    expect(args.output_config.effort).toBe("low");
+    expect(String(args.system)).toMatch(/data, not instructions/);
   });
 
   it("turns provider failures into safe messages", async () => {
-    expect((await proposeWithOpenAI(ok({ error: { message: "bad key" } }, 401) as unknown as typeof fetch, { apiKey: "sk", model: "m", resumeText: "t" })).ok).toBe(false);
-    const cut = await proposeWithOpenAI(ok({ choices: [{ message: { content: "{" }, finish_reason: "length" }] }) as unknown as typeof fetch, { apiKey: "sk", model: "m", resumeText: "t" });
+    const cut = await proposeWithClaude(fake(() => message("{", "max_tokens")).client, { model: "m", resumeText: "t" });
     expect(cut).toMatchObject({ ok: false, error: expect.stringMatching(/cut off/) });
-    const refused = await proposeWithOpenAI(ok({ choices: [{ message: { content: null, refusal: "no" } }] }) as unknown as typeof fetch, { apiKey: "sk", model: "m", resumeText: "t" });
+    const refused = await proposeWithClaude(fake(() => message("", "refusal")).client, { model: "m", resumeText: "t" });
     expect(refused).toMatchObject({ ok: false, error: expect.stringMatching(/declined/) });
-    const down = await proposeWithOpenAI((async () => { throw new TypeError("fetch failed"); }) as unknown as typeof fetch, { apiKey: "sk", model: "m", resumeText: "t" });
+    const notJson = await proposeWithClaude(fake(() => message("hello")).client, { model: "m", resumeText: "t" });
+    expect(notJson).toMatchObject({ ok: false, error: expect.stringMatching(/valid JSON/) });
+    const down = await proposeWithClaude(fake(() => { throw new Anthropic.APIConnectionError({ message: "down" }); }).client, { model: "m", resumeText: "t" });
     expect(down).toMatchObject({ ok: false, error: "Couldn't reach the AI provider." });
+    const weird = await proposeWithClaude(fake(() => { throw new Error("boom"); }).client, { model: "m", resumeText: "t" });
+    expect(weird).toMatchObject({ ok: false, error: "Couldn't reach the AI provider." });
   });
 });

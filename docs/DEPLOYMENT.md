@@ -71,7 +71,7 @@ create a new project and run `supabase/manual/all-migrations.sql` there instead 
 | `MARKET_ALERTS_FROM` | `CoreTech Recruiting <notifications@<your-domain>>` | Must be on the domain verified in Resend |
 | `JSEARCH_RAPIDAPI_KEY`, `ADZUNA_APP_ID`, `ADZUNA_APP_KEY` | optional | Job Radar sources |
 | `SLACK_MARKET_WEBHOOK_URL` | optional | Job Radar team alerts |
-| `AI_PRIVACY_REVIEW_APPROVED`, `OPENAI_API_KEY`, `OPENAI_MODEL`, `AI_MONTHLY_TOKEN_BUDGET` | leave empty until the privacy review | See README → AI resume parsing |
+| `AI_PRIVACY_REVIEW_APPROVED`, `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL` (optional, default `claude-haiku-5-5`), `AI_MONTHLY_TOKEN_BUDGET` | leave empty until the privacy review | See README → AI resume parsing |
 | `ANDROID_TWA_PACKAGE_NAME`, `ANDROID_TWA_SHA256_FINGERPRINTS` | later | Only when publishing the Android app |
 
    Never put a secret in a variable whose name starts with `NEXT_PUBLIC_` — those are sent to every visitor.

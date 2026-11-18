@@ -232,3 +232,19 @@ describe("match review", () => {
     expect(rows).toHaveLength(0);
   });
 });
+
+describe("scan writes (service role)", () => {
+  it("can stamp hunts and insert postings despite the term-validation CHECK constraints", async () => {
+    const touched = await db.asService((q) =>
+      q("update public.market_hunts set last_scanned_at = now() where id = $1 returning id", [hunt]),
+    );
+    expect(touched).toHaveLength(1);
+  });
+
+  it("can write candidate tags and job skills, which use the same validators", async () => {
+    const ok = await db.asService((q) =>
+      q("select private.valid_terms(array['firewall']) as terms, private.valid_tags(array['network']) as tags"),
+    );
+    expect(ok[0]).toMatchObject({ terms: true, tags: true });
+  });
+});

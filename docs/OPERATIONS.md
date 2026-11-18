@@ -32,7 +32,7 @@ A candidate's deletion request also applies to backups — they age out within t
 | Database & auth | Supabase → **Logs** and **Reports**; Supabase **usage** emails | Database CPU/disk near plan limits; spikes in failed sign-ins |
 | Email delivery | Resend → **Emails / Domains**; each interview's **Email log** in the app | Bounces or complaints rising; domain no longer verified |
 | Job Radar | Recruiter → Job Radar shows the last scan; Vercel → **Cron Jobs** | Last scan more than 6 hours old |
-| Spending | Spend limits/alerts in Vercel, Supabase, Resend and OpenAI dashboards | Any unexpected jump |
+| Spending | Spend limits/alerts in Vercel, Supabase, Resend and Claude (platform.claude.com) dashboards | Any unexpected jump |
 | Access | `audit_log` (SQL below) | Role changes you didn't make; unusual resume views |
 
 Useful admin queries (Supabase → SQL Editor):
@@ -59,7 +59,7 @@ Severity: **Sev 1** — data exposed or site down; **Sev 2** — a major feature
 1. **Write it down.** Start a dated incident note: what was seen, when, by whom. Keep adding to it.
 2. **Contain** (Sev 1 — do what applies, now):
    - Suspected leaked key → rotate it: Supabase secret key (Project Settings → API Keys → create a new secret key,
-     update Vercel, redeploy, then delete the old one), `CRON_SECRET`, `RESEND_API_KEY`, `OPENAI_API_KEY`.
+     update Vercel, redeploy, then delete the old one), `CRON_SECRET`, `RESEND_API_KEY`, `ANTHROPIC_API_KEY`.
    - Compromised user account → remove their roles at **Users** (access ends immediately); in Supabase →
      Authentication → Users, sign the user out of all sessions / ban them.
    - A feature leaking data → roll back to the last good deployment (Vercel → Instant Rollback).

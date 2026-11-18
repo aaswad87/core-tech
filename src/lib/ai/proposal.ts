@@ -43,17 +43,20 @@ export const proposalSchema = z.object({
 export type Proposal = z.infer<typeof proposalSchema>;
 export type Confidence = z.infer<typeof confidence>;
 
-/** JSON Schema for the provider's structured-output mode (strict: every key required, nulls allowed). */
-export const PROPOSAL_JSON_SCHEMA = (() => {
+/**
+ * JSON Schema for Claude's structured-output mode: every key required, `additionalProperties: false`,
+ * nullable fields as `anyOf`, and no length/number constraints (unsupported there — zod enforces them).
+ */
+export const PROPOSAL_JSON_SCHEMA: Record<string, unknown> = (() => {
   const str = { type: "string" };
-  const nstr = { type: ["string", "null"] };
+  const nstr = { anyOf: [{ type: "string" }, { type: "null" }] };
   const conf = { type: "string", enum: ["high", "medium", "low"] };
   const obj = (properties: Record<string, unknown>) => ({ type: "object", additionalProperties: false, required: Object.keys(properties), properties });
   return obj({
     headline: obj({ value: nstr, evidence: nstr, confidence: conf }),
     summary: obj({ value: nstr, confidence: conf }),
     location: obj({ value: nstr, evidence: nstr, confidence: conf }),
-    skills: { type: "array", items: obj({ name: str, years_experience: { type: ["number", "null"] }, evidence: str, confidence: conf }) },
+    skills: { type: "array", items: obj({ name: str, years_experience: { anyOf: [{ type: "number" }, { type: "null" }] }, evidence: str, confidence: conf }) },
     certifications: { type: "array", items: obj({ name: str, issuer: nstr, evidence: str, confidence: conf }) },
     work_history: {
       type: "array",

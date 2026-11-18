@@ -31,9 +31,9 @@ describe("runPreflight", () => {
   });
 
   it("catches a publishable key pasted as the secret, and secrets exposed with NEXT_PUBLIC_", () => {
-    const r: Result[] = runPreflight({ ...good, SUPABASE_SECRET_KEY: "sb_publishable_abc", NEXT_PUBLIC_OPENAI_API_KEY: "sk-1" });
+    const r: Result[] = runPreflight({ ...good, SUPABASE_SECRET_KEY: "sb_publishable_abc", NEXT_PUBLIC_ANTHROPIC_API_KEY: "sk-1" });
     expect(levelOf(r, "SUPABASE_SECRET_KEY")).toBe("fail");
-    expect(levelOf(r, "NEXT_PUBLIC_OPENAI_API_KEY")).toBe("fail");
+    expect(levelOf(r, "NEXT_PUBLIC_ANTHROPIC_API_KEY")).toBe("fail");
   });
 
   it("warns about unverified-looking email domains, draft legal pages and vercel.app URLs", () => {
@@ -48,7 +48,7 @@ describe("runPreflight", () => {
 
   it("requires AI credentials once the privacy flag is on", () => {
     expect(levelOf(runPreflight({ ...good, AI_PRIVACY_REVIEW_APPROVED: "true" }), "AI parsing")).toBe("fail");
-    expect(levelOf(runPreflight({ ...good, AI_PRIVACY_REVIEW_APPROVED: "true", OPENAI_API_KEY: "k", OPENAI_MODEL: "m" }), "AI parsing")).toBe("warn");
+    expect(levelOf(runPreflight({ ...good, AI_PRIVACY_REVIEW_APPROVED: "true", ANTHROPIC_API_KEY: "k" }), "AI parsing")).toBe("warn");
   });
 
   it("never echoes values in its messages", () => {

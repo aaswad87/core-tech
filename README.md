@@ -166,8 +166,9 @@ Safeguards:
 3. Decide who may use it (all recruiters, or admins only) and train them: suggestions must be checked against
    the quotes, and AI output is never a hiring decision.
 4. Set a monthly token budget that matches your spending limit, and set the same limit in the provider's dashboard.
-5. Then set `OPENAI_API_KEY`, `OPENAI_MODEL` (a model that supports structured outputs) and
-   `AI_PRIVACY_REVIEW_APPROVED=true`, and restart the app.
+5. Then set `ANTHROPIC_API_KEY` (a Claude API key from platform.claude.com) and
+   `AI_PRIVACY_REVIEW_APPROVED=true`, and redeploy. The model defaults to Claude Haiku 5.5 (lowest cost);
+   set `ANTHROPIC_MODEL` to use another Claude model.
 
 ## Contract staffing (`/recruiter/contracts`, administrators)
 

@@ -68,6 +68,11 @@ export class TestDb {
     return this.withRole("anon", JSON.stringify({ role: "anon" }), fn);
   }
 
+  /** Runs as Supabase's `service_role` (the server-only secret key), which bypasses RLS but not grants. */
+  async asService<T>(fn: (q: Query) => Promise<T>): Promise<T> {
+    return this.withRole("service_role", JSON.stringify({ role: "service_role" }), fn);
+  }
+
   private async withRole<T>(role: string, claims: string, fn: (q: Query) => Promise<T>): Promise<T> {
     await this.pg.query("select set_config('request.jwt.claims', $1, false)", [claims]);
     await this.pg.exec(`set role ${role}`);

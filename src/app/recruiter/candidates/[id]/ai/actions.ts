@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { checkProposal, type ReviewedProposal } from "@/lib/ai/proposal";
-import { proposeWithOpenAI } from "@/lib/ai/openai";
+import { createClaudeClient, proposeWithClaude } from "@/lib/ai/claude";
 import { normalizeResumeText, redactContactDetails } from "@/lib/ai/redact";
 import { loadResumeText } from "@/lib/ai/resume-source";
 import { getStaffUser } from "@/lib/auth/session";
@@ -59,7 +59,7 @@ export async function parseResumeWithAi(_prev: FormState, formData: FormData): P
   });
   if (beginError || !parseId) return { status: "error", message: beginError ? dbMessage(beginError, "AI parsing couldn't start.") : "AI parsing couldn't start." };
 
-  const result = await proposeWithOpenAI(fetch, { apiKey: config.apiKey, model: config.model, resumeText: text });
+  const result = await proposeWithClaude(createClaudeClient(config.apiKey), { model: config.model, resumeText: text });
   const checked = result.ok ? checkProposal(result.json, text) : null;
   const error = !result.ok ? result.error : checked && !checked.ok ? checked.error : null;
   const proposal = checked?.ok ? { ...checked.proposal, truncated: redacted.text.length > text.length, redactions: redacted.redactions } : null;
